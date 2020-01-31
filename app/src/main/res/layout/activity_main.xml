@@ -6,34 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/colText"
-        android:layout_width="88dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="@string/col_hint"
-        android:inputType="number|numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/rowText"
-        android:layout_width="88dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="@string/row_hint"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@+id/colText"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
-
     <Button
         android:id="@+id/createButton"
         android:layout_width="85dp"
@@ -79,27 +51,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/colView"
-        android:layout_width="139dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="112dp"
-        android:text="@string/textview"
+    <Spinner
+        android:id="@+id/spnCol"
+        android:layout_width="88dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:entries="@array/size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colText" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spnRow"
+        android:layout_width="88dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="50dp"
+        android:entries="@array/size"
+        app:layout_constraintStart_toEndOf="@+id/spnCol"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/rowView"
-        android:layout_width="127dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="112dp"
-        android:text="@string/textview"
-        app:layout_constraintStart_toEndOf="@+id/colView"
-        app:layout_constraintTop_toBottomOf="@+id/rowText" />
+        android:id="@+id/tvCol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/col_hint"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spnCol"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/row_hint"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/tvCol"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
