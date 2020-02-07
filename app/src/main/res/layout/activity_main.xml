@@ -12,7 +12,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="108dp"
-        android:layout_marginRight="108dp"
         android:text="@string/create_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,8 +21,7 @@
         android:id="@+id/hintButton"
         android:layout_width="81dp"
         android:layout_height="40dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginLeft="136dp"
+        android:layout_marginStart="232dp"
         android:layout_marginBottom="16dp"
         android:text="@string/hint_btn"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,14 +29,13 @@
 
     <Button
         android:id="@+id/solveButton"
-        android:layout_width="173dp"
+        android:layout_width="81dp"
         android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/solve_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hintButton" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/shuffleButton"
@@ -46,7 +43,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="@string/shuffle_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +52,6 @@
         android:layout_width="88dp"
         android:layout_height="43dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="50dp"
         android:entries="@array/size"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +62,6 @@
         android:layout_width="88dp"
         android:layout_height="43dp"
         android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
         android:layout_marginTop="50dp"
         android:entries="@array/size"
         app:layout_constraintStart_toEndOf="@+id/spnCol"
@@ -78,7 +72,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:text="@string/col_hint"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/spnCol"
@@ -88,24 +81,36 @@
         android:id="@+id/tvRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
         android:text="@string/row_hint"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spnRow"
         app:layout_constraintStart_toEndOf="@+id/tvCol"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="406dp"
-        android:layout_height="441dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.648" />
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <TableLayout
+        android:id="@+id/myTable"
+        android:layout_width="fill_parent"
+        android:layout_height="430dp"
+        app:layout_constraintBottom_toTopOf="@+id/hintButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnCol">
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/errorView"
+        android:layout_width="160dp"
+        android:layout_height="37dp"
+        android:text="@string/error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hintButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myTable" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

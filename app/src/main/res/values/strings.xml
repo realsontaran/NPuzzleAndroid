@@ -4,7 +4,7 @@
     <string name="row_hint">Row</string>
     <string name="create_btn">Create</string>
     <string name="hint_btn">HINT</string>
-    <string name="solve_btn">SOLVE THE PUZZLE</string>
+    <string name="solve_btn">SOLVE</string>
     <string name="shuffle_btn">Shuffle</string>
     <string name="textview">TextView</string>
     <string name="welcome_to_the_npuzzle_game">Welcome To The NPuzzle Game!</string>
@@ -14,4 +14,5 @@
     <string name="and_empty_tile_will_change_position_with_tapped_tile">- And empty tile will change position with tapped tile</string>
     <string name="you_can_take_a_hint_if_you_stuck">- You can take a hint if you stuck</string>
     <string name="and_there_is_very_smart_ai_waiting_for_solve_the_puzzle">- And there is very smart AI waiting for solve the puzzle</string>
+    <string name="error">error</string>
 </resources>

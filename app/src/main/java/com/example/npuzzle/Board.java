@@ -1,117 +1,74 @@
 package com.example.npuzzle;
 
+import android.graphics.RenderNode;
+
+import java.util.Random;
+
 public class Board {
 
 
     private int[][] board;
 
-    private int height = 0;
-    private int width = 0;
+    private int height;
+    private int width;
 
-    private int numberofmoves = 0;
+    private int numberofmoves;
     private int y_empty;
     private int x_empty;
+    private char lastmove;
 
-    public Board(int h, int w) {
+    Board(int h, int w) {
+
+        height = h;
+        width = w;
+        numberofmoves = 0;
 
         board = new int[h][w];
         x_empty = h - 1;
         y_empty = w - 1;
-        initFinalBoard(h, w);
+        FinalBoard();
     }
 
-    /**
-     * This method creates final board
-     *
-     * @param h height
-     * @param w width
-     */
-    private void initFinalBoard(int h, int w) {
+    int getValue(int row, int col) {
+        return board[row][col];
+    }
+
+    private void FinalBoard() {
         int k = 0;
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 ++k;
-                if (k == h * w) {
+                if (k == height * width) {
                     k = -1;
+                    setY_empty(i);
+                    setX_empty(j);
                 }
                 board[i][j] = k;
             }
         }
     }
 
-    public int getXEmpty() {
-        return x_empty;
-    }
 
-    public int getYEmpty() {
-        return y_empty;
-    }
-
-    /**
-     * Getter method for height
-     *
-     * @return the height
-     */
-    public int getHeight() {
+    int getHeight() {
         return height;
     }
 
-    /**
-     * Setter method for height
-     *
-     * @param width the width to set
-     */
-    public void setWidth(int width) {
-        this.width = width;
+    private void setY_empty(int y_empty) {
+        this.y_empty = y_empty;
     }
 
-    /**
-     * Setter method for width
-     *
-     * @param height the height to set
-     */
-    public void setHeight(int height) {
-        this.height = height;
+    private void setX_empty(int x_empty) {
+        this.x_empty = x_empty;
     }
 
-    /**
-     * Getter method for width
-     *
-     * @return the width
-     */
-    public int getWidth() {
+    int getWidth() {
 
         return width;
     }
 
-
-    /**
-     * Returns the number of steps (moves) this board made.
-     *
-     * @return int
-     */
     public int numberOfMoves() {
         return numberofmoves;
     }
-
-
-    /**
-     * Makes a move according to the given char parameter.
-     *
-     * @param move parameter
-     * @return boolean
-     */
-
-    public boolean move(char move) {
-        ++numberofmoves;
-        return false;
-    }
-
-    /**
-     * Returns true if the board is a solution
-     *
-     * @return boolean
-     */
 
     public boolean isSolved() {
         int k = 0;
@@ -129,5 +86,79 @@ public class Board {
             }
         }
         return isIt;
+    }
+
+    void shuffle() {
+        char[] moves = {'r', 'l', 'u', 'd'};
+        char randomMove;
+        Random random = new Random();
+
+        for (int i = 0; i < 200; i++) {
+            randomMove = moves[random.nextInt(4)];
+
+            if (lastmove == 'r' && randomMove == 'l') {
+                --i;
+            }
+            if (lastmove == 'l' && randomMove == 'r') {
+                --i;
+            }
+            if (lastmove == 'd' && randomMove == 'u') {
+                --i;
+            }
+            if (lastmove == 'u' && randomMove == 'd') {
+                --i;
+            }
+
+            if (!move(randomMove)) {
+                --i;
+            }
+        }
+    }
+
+    boolean move(char move) {
+
+        switch (move) {
+            case 'u':
+                if (y_empty != 0) {
+                    board[y_empty][x_empty] = board[y_empty - 1][x_empty];
+                    board[y_empty - 1][x_empty] = -1;
+                    --y_empty;
+                    ++numberofmoves;
+                    lastmove = move;
+                    return true;
+                }
+                break;
+            case 'd':
+                if (y_empty != getHeight() - 1) {
+                    board[y_empty][x_empty] = board[y_empty + 1][x_empty];
+                    board[y_empty + 1][x_empty] = -1;
+                    ++y_empty;
+                    ++numberofmoves;
+                    lastmove = move;
+                    return true;
+                }
+                break;
+            case 'r':
+                if (x_empty != getWidth() - 1) {
+                    board[y_empty][x_empty] = board[y_empty][x_empty + 1];
+                    board[y_empty][x_empty + 1] = -1;
+                    ++x_empty;
+                    ++numberofmoves;
+                    lastmove = move;
+                    return true;
+                }
+                break;
+            case 'l':
+                if (x_empty != 0) {
+                    board[y_empty][x_empty] = board[y_empty][x_empty - 1];
+                    board[y_empty][x_empty - 1] = -1;
+                    --x_empty;
+                    ++numberofmoves;
+                    lastmove = move;
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 }
