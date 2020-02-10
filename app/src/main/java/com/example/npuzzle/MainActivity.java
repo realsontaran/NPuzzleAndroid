@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     Button button;
     Button shuffle;
-    Boolean clicked = false;
+    boolean clicked = false;
+    boolean created = false;
     int Row;
     int Col;
 
@@ -52,12 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (!clicked) {
-                    loadBoard();
+                    created = true;
                     clicked = true;
+                    shuffleBoard();
+
                 }
-
-
-                Toast.makeText(MainActivity.this, "Col: " + puzzle.getHeight() + " Row: " + puzzle.getWidth(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -65,12 +65,62 @@ public class MainActivity extends AppCompatActivity {
         shuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                puzzle.shuffle();
-                tableClear();
-                loadBoard();
+                shuffleBoard();
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        button = findViewById(R.id.createButton);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                spinner = findViewById(R.id.spnCol);
+                String tmp = spinner.getSelectedItem().toString();
+
+                Col = Integer.parseInt(tmp);
+                spinner = findViewById(R.id.spnRow);
+
+                tmp = spinner.getSelectedItem().toString();
+                Row = Integer.parseInt(tmp);
+
+                puzzle = new Board(Row, Col);
+
+
+                if (clicked) {
+                    tableClear();
+                }
+
+                if (!clicked) {
+                    created = true;
+                    clicked = true;
+                    shuffleBoard();
+
+                }
+            }
+        });
+
+        shuffle = findViewById(R.id.shuffleButton);
+        shuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shuffleBoard();
+            }
+        });
+    }
+
+    private void shuffleBoard() {
+        if (created) {
+            puzzle.shuffle();
+            tableClear();
+            loadBoard();
+        }
     }
 
     public void loadBoard() {
@@ -93,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         System.gc();
     }
 
-    @SuppressLint("SetTextI18n")
     public void tableCreate(final int index) {
 
         TableLayout table = findViewById(R.id.myTable);
@@ -119,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
             Button b = new Button(this);
 
             if (index != -1) {
-                b.setText("" + index);
+                b.setText(String.format("%s", index));
+                b.setTextSize(18);
                 b.setId(index);
             } else {
                 b.setText(" ");
@@ -141,30 +191,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private void checkClick(Button button) {
 
         TableLayout tableLayout = findViewById(R.id.myTable);
+        TableRow tableRow, upper, lower;
+
+        Button right = null, left = null, up = null, down = null;
+
         TextView view = findViewById(R.id.errorView);
-        view.setText(""+button.getId());
 
-        Button right = null,
-                left = null,
-                up = null,
-                down = null;
-
-        TableRow tableRow,
-                upper,
-                lower;
-
-        int tmpId = button.getId();
         int k = 0;
 
         for (int i = 0; i < Row; i++) {
             tableRow = (TableRow) tableLayout.getChildAt(i);
             for (int j = 0; j < Col; j++) {
                 ++k;
-                if (k == tmpId) {
+                if (k == button.getId()) {
                     if (j != Col - 1) {
                         right = (Button) tableRow.getChildAt(j + 1);
                     }
@@ -179,33 +221,11 @@ public class MainActivity extends AppCompatActivity {
                         lower = (TableRow) tableLayout.getChildAt(i + 1);
                         down = (Button) lower.getChildAt(j);
                     }
-
-
-                    if (right != null && right.getId() == -1) {
-                        puzzle.move('l');
-                        Toast.makeText(MainActivity.this, "left", Toast.LENGTH_LONG).show();
-                    }
-                    if (left != null && left.getId() == -1) {
-                        puzzle.move('r');
-                        Toast.makeText(MainActivity.this, "right", Toast.LENGTH_LONG).show();
-                    }
-                    if (up != null && up.getId() == -1) {
-                        puzzle.move('d');
-                        Toast.makeText(MainActivity.this, "down", Toast.LENGTH_LONG).show();
-                    }
-                    if (down != null && down.getId() == -1) {
-                        puzzle.move('u');
-                        Toast.makeText(MainActivity.this, "up", Toast.LENGTH_LONG).show();
-                    }
                 }
             }
         }
     }
 }
-
-
-
-
 
 
 

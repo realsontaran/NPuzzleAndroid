@@ -1,7 +1,5 @@
 package com.example.npuzzle;
 
-import android.graphics.RenderNode;
-
 import java.util.Random;
 
 public class Board {
@@ -15,7 +13,7 @@ public class Board {
     private int numberofmoves;
     private int y_empty;
     private int x_empty;
-    private char lastmove;
+    private char lastMove;
 
     Board(int h, int w) {
 
@@ -49,7 +47,7 @@ public class Board {
     }
 
 
-    int getHeight() {
+    private int getHeight() {
         return height;
     }
 
@@ -61,7 +59,7 @@ public class Board {
         this.x_empty = x_empty;
     }
 
-    int getWidth() {
+    private int getWidth() {
 
         return width;
     }
@@ -96,16 +94,16 @@ public class Board {
         for (int i = 0; i < 200; i++) {
             randomMove = moves[random.nextInt(4)];
 
-            if (lastmove == 'r' && randomMove == 'l') {
+            if (lastMove == 'r' && randomMove == 'l') {
                 --i;
             }
-            if (lastmove == 'l' && randomMove == 'r') {
+            if (lastMove == 'l' && randomMove == 'r') {
                 --i;
             }
-            if (lastmove == 'd' && randomMove == 'u') {
+            if (lastMove == 'd' && randomMove == 'u') {
                 --i;
             }
-            if (lastmove == 'u' && randomMove == 'd') {
+            if (lastMove == 'u' && randomMove == 'd') {
                 --i;
             }
 
@@ -115,7 +113,7 @@ public class Board {
         }
     }
 
-    boolean move(char move) {
+    private boolean move(char move) {
 
         switch (move) {
             case 'u':
@@ -124,7 +122,7 @@ public class Board {
                     board[y_empty - 1][x_empty] = -1;
                     --y_empty;
                     ++numberofmoves;
-                    lastmove = move;
+                    lastMove = move;
                     return true;
                 }
                 break;
@@ -134,7 +132,7 @@ public class Board {
                     board[y_empty + 1][x_empty] = -1;
                     ++y_empty;
                     ++numberofmoves;
-                    lastmove = move;
+                    lastMove = move;
                     return true;
                 }
                 break;
@@ -144,7 +142,7 @@ public class Board {
                     board[y_empty][x_empty + 1] = -1;
                     ++x_empty;
                     ++numberofmoves;
-                    lastmove = move;
+                    lastMove = move;
                     return true;
                 }
                 break;
@@ -154,7 +152,7 @@ public class Board {
                     board[y_empty][x_empty - 1] = -1;
                     --x_empty;
                     ++numberofmoves;
-                    lastmove = move;
+                    lastMove = move;
                     return true;
                 }
                 break;
