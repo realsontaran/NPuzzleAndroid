@@ -2,7 +2,7 @@ package com.example.npuzzle;
 
 import java.util.Random;
 
-public class Board {
+class Board {
 
 
     private int[][] board;
@@ -60,15 +60,14 @@ public class Board {
     }
 
     private int getWidth() {
-
         return width;
     }
 
-    public int numberOfMoves() {
+    int numberOfMoves() {
         return numberofmoves;
     }
 
-    public boolean isSolved() {
+    boolean isSolved() {
         int k = 0;
         boolean isIt = true;
 
@@ -111,9 +110,10 @@ public class Board {
                 --i;
             }
         }
+        numberofmoves = 0;
     }
 
-    private boolean move(char move) {
+    boolean move(char move) {
 
         switch (move) {
             case 'u':

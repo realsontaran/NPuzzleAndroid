@@ -3,7 +3,9 @@ package com.example.npuzzle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,16 +21,20 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     Button button;
     Button shuffle;
-    boolean clicked = false;
+    TextView counter;
+
+    boolean click = false;
     boolean created = false;
     int Row;
     int Col;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        counter = findViewById(R.id.movecount);
 
         button = findViewById(R.id.createButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -48,15 +54,14 @@ public class MainActivity extends AppCompatActivity {
                 puzzle = new Board(Row, Col);
 
 
-                if (clicked) {
+                if (click) {
                     tableClear();
                 }
 
-                if (!clicked) {
+                if (!click) {
                     created = true;
-                    clicked = true;
+                    click = true;
                     shuffleBoard();
-
                 }
             }
         });
@@ -69,57 +74,59 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        TableLayout tableLayout = findViewById(R.id.myTable);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        button = findViewById(R.id.createButton);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                spinner = findViewById(R.id.spnCol);
-                String tmp = spinner.getSelectedItem().toString();
-
-                Col = Integer.parseInt(tmp);
-                spinner = findViewById(R.id.spnRow);
-
-                tmp = spinner.getSelectedItem().toString();
-                Row = Integer.parseInt(tmp);
-
-                puzzle = new Board(Row, Col);
-
-
-                if (clicked) {
-                    tableClear();
+        tableLayout.setOnTouchListener(new SwipeDetect(MainActivity.this) {
+            @SuppressLint("SetTextI18n")
+            public void onSwipeRight() {
+                if (!puzzle.isSolved()) {
+                    if (puzzle.move('r')) {
+                        loadBoard();
+                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                    }
                 }
+            }
 
-                if (!clicked) {
-                    created = true;
-                    clicked = true;
-                    shuffleBoard();
+            @SuppressLint("SetTextI18n")
+            public void onSwipeLeft() {
+                if (!puzzle.isSolved()) {
+                    if (puzzle.move('l')) {
+                        loadBoard();
+                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                    }
+                }
+            }
 
+            @SuppressLint("SetTextI18n")
+            public void onSwipeTop() {
+                if (!puzzle.isSolved()) {
+                    if (puzzle.move('u')) {
+                        loadBoard();
+                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                    }
+                }
+            }
+
+            @SuppressLint("SetTextI18n")
+            public void onSwipeBottom() {
+                if (!puzzle.isSolved()) {
+                    if (puzzle.move('d')) {
+                        loadBoard();
+                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                    }
                 }
             }
         });
 
-        shuffle = findViewById(R.id.shuffleButton);
-        shuffle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shuffleBoard();
-            }
-        });
     }
 
+    @SuppressLint("SetTextI18n")
     private void shuffleBoard() {
         if (created) {
             puzzle.shuffle();
             tableClear();
             loadBoard();
+            counter.setText("Move Counter: 0");
         }
     }
 
@@ -131,15 +138,20 @@ public class MainActivity extends AppCompatActivity {
                 tableCreate(puzzle.getValue(i, j));
             }
         }
+
+        if (puzzle.isSolved()) {
+            Toast.makeText(MainActivity.this, "CONGRATULATIONS PUZZLE SOLVED!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void tableClear() {
         TableLayout table = findViewById(R.id.myTable);
         for (int i = 0; i < table.getChildCount(); i++) {
             View child = table.getChildAt(i);
-            if (child instanceof TableRow) ((ViewGroup) child).removeAllViews();
+            if (child instanceof TableRow)
+                ((ViewGroup) child).removeAllViews();
         }
-        clicked = false;
+        click = false;
         System.gc();
     }
 
@@ -165,64 +177,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (buttonsInRow < Col) {
-            Button b = new Button(this);
+            TextView tile = new TextView(this);
+            tile.setBackgroundResource(R.drawable.border);
+            tile.setTextSize(19);
+            tile.setTextColor(Color.WHITE);
+            tile.setGravity(Gravity.CENTER);
 
             if (index != -1) {
-                b.setText(String.format("%s", index));
-                b.setTextSize(18);
-                b.setId(index);
+                tile.setText(String.format("%s", index));
+                tile.setId(index);
             } else {
-                b.setText(" ");
-                b.setId(index);
+                tile.setText(" ");
+                tile.setId(index);
             }
-
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkClick((Button) v);
-                    loadBoard();
-                    if (v.getId() == -1) {
-                        Toast.makeText(MainActivity.this, "EMPTY", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
             assert row != null;
-            row.addView(b, table.getWidth() / Col, table.getHeight() / Row);
-        }
-    }
-
-    private void checkClick(Button button) {
-
-        TableLayout tableLayout = findViewById(R.id.myTable);
-        TableRow tableRow, upper, lower;
-
-        Button right = null, left = null, up = null, down = null;
-
-        TextView view = findViewById(R.id.errorView);
-
-        int k = 0;
-
-        for (int i = 0; i < Row; i++) {
-            tableRow = (TableRow) tableLayout.getChildAt(i);
-            for (int j = 0; j < Col; j++) {
-                ++k;
-                if (k == button.getId()) {
-                    if (j != Col - 1) {
-                        right = (Button) tableRow.getChildAt(j + 1);
-                    }
-                    if (j != 0) {
-                        left = (Button) tableRow.getChildAt(j - 1);
-                    }
-                    if (i != 0) {
-                        upper = (TableRow) tableLayout.getChildAt(i - 1);
-                        up = (Button) upper.getChildAt(j);
-                    }
-                    if (i != Row - 1) {
-                        lower = (TableRow) tableLayout.getChildAt(i + 1);
-                        down = (Button) lower.getChildAt(j);
-                    }
-                }
-            }
+            row.addView(tile, table.getWidth() / Col, table.getHeight() / Row);
         }
     }
 }

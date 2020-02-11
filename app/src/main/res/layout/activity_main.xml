@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/layoutBG"
     tools:context=".MainActivity">
+
 
     <Button
         android:id="@+id/createButton"
         android:layout_width="85dp"
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginEnd="96dp"
         android:text="@string/create_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <Button
         android:id="@+id/hintButton"
@@ -57,22 +58,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spnRow"
-        android:layout_width="88dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="50dp"
-        android:entries="@array/size"
-        app:layout_constraintStart_toEndOf="@+id/spnCol"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvCol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/col_hint"
+        android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/spnCol"
         app:layout_constraintStart_toStartOf="parent" />
@@ -84,35 +76,47 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/row_hint"
+        android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/spnRow"
         app:layout_constraintStart_toEndOf="@+id/tvCol"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-
     <TableLayout
         android:id="@+id/myTable"
         android:layout_width="fill_parent"
-        android:layout_height="430dp"
+        android:layout_height="431dp"
         app:layout_constraintBottom_toTopOf="@+id/hintButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnCol">
+        app:layout_constraintTop_toBottomOf="@+id/spnCol"
+        app:layout_constraintVertical_bias="0.454">
 
     </TableLayout>
 
     <TextView
-        android:id="@+id/errorView"
-        android:layout_width="160dp"
-        android:layout_height="37dp"
-        android:text="@string/error"
+        android:id="@+id/movecount"
+        android:layout_width="198dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/movecounter"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/hintButton"
-        app:layout_constraintHorizontal_bias="0.416"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myTable"
-        app:layout_constraintVertical_bias="0.451" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spnRow"
+        android:layout_width="88dp"
+        android:layout_height="43dp"
+        android:entries="@array/size"
+        app:layout_constraintBottom_toBottomOf="@+id/spnCol"
+        app:layout_constraintEnd_toStartOf="@+id/createButton"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toEndOf="@+id/spnCol" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

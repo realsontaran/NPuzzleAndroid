@@ -47,14 +47,14 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="367dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="371dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="8dp"
         android:text="@string/just_tap_the_tile_which_is_adjacent_with_empty_tile"
         android:textColor="#263238"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
