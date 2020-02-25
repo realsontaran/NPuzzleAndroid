@@ -1,7 +1,6 @@
 package com.example.npuzzle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!puzzle.isSolved()) {
                     if (puzzle.move('r')) {
                         loadBoard();
-                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                        counter.setText("Move Counter: " + puzzle.numberOfMoves());
                     }
                 }
             }
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!puzzle.isSolved()) {
                     if (puzzle.move('l')) {
                         loadBoard();
-                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                        counter.setText("Move Counter: " + puzzle.numberOfMoves());
                     }
                 }
             }
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!puzzle.isSolved()) {
                     if (puzzle.move('u')) {
                         loadBoard();
-                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                        counter.setText("Move Counter: " + puzzle.numberOfMoves());
                     }
                 }
             }
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!puzzle.isSolved()) {
                     if (puzzle.move('d')) {
                         loadBoard();
-                        counter.setText("Move Counter: "+puzzle.numberOfMoves());
+                        counter.setText("Move Counter: " + puzzle.numberOfMoves());
                     }
                 }
             }
@@ -120,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Shuffle the board, clear the tableview and load the board to the tableview
+     */
     @SuppressLint("SetTextI18n")
     private void shuffleBoard() {
         if (created) {
@@ -130,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Get the index' from board and load it to the Table View
+     */
     public void loadBoard() {
         tableClear();
 
@@ -144,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Clears the Table View for next Board
+     */
     public void tableClear() {
         TableLayout table = findViewById(R.id.myTable);
         for (int i = 0; i < table.getChildCount(); i++) {
@@ -155,28 +163,31 @@ public class MainActivity extends AppCompatActivity {
         System.gc();
     }
 
+    /**
+     * Take an index for loading it to the sub views of Table view
+     *
+     */
     public void tableCreate(final int index) {
 
         TableLayout table = findViewById(R.id.myTable);
 
-        int buttonsInRow = 0;
+        int textOnRow = 0;
 
         int numRows = table.getChildCount();
 
         TableRow row = null;
-
         if (numRows > 0) {
             row = (TableRow) table.getChildAt(numRows - 1);
-            buttonsInRow = row.getChildCount();
+            textOnRow = row.getChildCount();
         }
 
-        if (numRows == 0 || buttonsInRow == Col) {
+        if (numRows == 0 || textOnRow == Col) {
             row = new TableRow(this);
             table.addView(row);
-            buttonsInRow = 0;
+            textOnRow = 0;
         }
 
-        if (buttonsInRow < Col) {
+        if (textOnRow < Col) {
             TextView tile = new TextView(this);
             tile.setBackgroundResource(R.drawable.border);
             tile.setTextSize(19);
@@ -187,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 tile.setText(String.format("%s", index));
                 tile.setId(index);
             } else {
+                tile.setBackgroundResource(R.drawable.empty_border);
                 tile.setText(" ");
                 tile.setId(index);
             }
@@ -195,17 +207,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

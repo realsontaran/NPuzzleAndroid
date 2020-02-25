@@ -9,9 +9,6 @@
     <string name="welcome_to_the_npuzzle_game">Welcome To The NPuzzle Game!</string>
     <string name="how_to_play">How To Play:</string>
     <string name="it_s_very_easy_to_play">- It\'s very easy to play</string>
-    <string name="just_tap_the_tile_which_is_adjacent_with_empty_tile">- Just tap the tile which is adjacent with empty tile</string>
-    <string name="and_empty_tile_will_change_position_with_tapped_tile">- And empty tile will change position with tapped tile</string>
-    <string name="you_can_take_a_hint_if_you_stuck">- You can take a hint if you stuck</string>
-    <string name="and_there_is_very_smart_ai_waiting_for_solve_the_puzzle">- And there is very smart AI waiting for solve the puzzle</string>
-    <string name="movecounter">Move Counter: 0</string>
+   <string name="movecounter">Move Counter: 0</string>
+    <string name="just_swipe_the_screen_at_the_direction_which_you_want_to_move_empty_tile">Just swipe the screen at the direction which you want to move empty tile</string>
 </resources>
